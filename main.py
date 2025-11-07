@@ -2,7 +2,7 @@
 import streamlit as st
 
 st.set_page_config(page_title="Interview Prep AI", layout="wide")
-st.title("Interview Prep AI")
+st.title("Interview Prep Help")
 st.markdown("""
 Upload your resume and job description, and the AI will generate tailored interview questions with example answers.  
 This demo shows a **ready-to-use example** for practice.
