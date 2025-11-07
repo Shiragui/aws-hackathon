@@ -1,43 +1,64 @@
 # main.py
 import streamlit as st
-import requests
-import json
 
-st.set_page_config(page_title="Job Offer Analyzer", layout="wide")
-st.title("Job Offer Analyzer")
-
+st.set_page_config(page_title="Interview Prep AI", layout="wide")
+st.title("Interview Prep AI")
 st.markdown("""
-Upload your job offer or NDA document (PDF, DOCX) and see a summary of key details like salary, benefits, PTO, and NDA terms.
+Upload your resume and job description, and the AI will generate tailored interview questions with example answers.  
+This demo shows a **ready-to-use example** for practice.
 """)
 
-# Upload file
-uploaded_file = st.file_uploader("Upload your job offer", type=["pdf", "docx"])
+# Dummy uploaded files
+st.subheader("Uploaded Files")
+st.write("**Resume:** Jane_Doe_Resume.pdf")
+st.write("**Job Description:** Software_Engineer_JD.pdf")
 
-if uploaded_file is not None:
-    st.info("Processing document...")
+st.info("Generating interview questions...")
+st.success("Interview questions generated!")
 
-    # Prepare the file for API call
-    files = {"file": uploaded_file.getvalue()}
+# Organize dummy questions by category
+questions = {
+    "Technical": [
+        {
+            "question": "Explain the difference between a REST API and GraphQL.",
+            "example_answer": "REST APIs use fixed endpoints and standard HTTP methods, while GraphQL allows clients to request exactly the data they need in a single query. GraphQL can reduce over-fetching and under-fetching of data."
+        },
+        {
+            "question": "How would you optimize a slow SQL query?",
+            "example_answer": "I would start by analyzing the query execution plan, adding appropriate indexes, rewriting joins if needed, and considering caching frequent queries."
+        }
+    ],
+    "Behavioral": [
+        {
+            "question": "Tell me about a time you handled a difficult project.",
+            "example_answer": "In my last role, I led a project with a tight deadline and unclear requirements. I broke down tasks, held daily syncs with the team, and delivered the project on time while maintaining quality."
+        },
+        {
+            "question": "How do you handle tight deadlines?",
+            "example_answer": "I prioritize tasks, communicate early if I need help, and break large tasks into smaller milestones to track progress effectively."
+        }
+    ],
+    "Salary Negotiation": [
+        {
+            "question": "How would you negotiate salary if offered?",
+            "example_answer": "I would express my excitement about the role and then reference industry standards and my experience: 'I'm thrilled about this opportunity. Based on my experience and market research, I was expecting a range closer to $95k-$105k. Is there flexibility in the offer?'"
+        },
+        {
+            "question": "What factors do you consider when evaluating a compensation package?",
+            "example_answer": "I look at base salary, bonus potential, equity, benefits, PTO, and opportunities for growth. I also consider alignment with my career goals."
+        }
+    ]
+}
 
-    # Replace this with your actual BDA project API endpoint
-    BDA_API_ENDPOINT = "https://your-bda-project-endpoint.amazonaws.com/process"
+# Display questions in tabs
+tabs = st.tabs(list(questions.keys()))
 
-    try:
-        response = requests.post(BDA_API_ENDPOINT, files=files)
-        response.raise_for_status()
-        data = response.json()
+for tab, category in zip(tabs, questions.keys()):
+    with tab:
+        st.subheader(f"{category} Questions")
+        for i, q in enumerate(questions[category], 1):
+            with st.expander(f"Q{i}: {q['question']}"):
+                st.write("**Example Answer:**")
+                st.write(q['example_answer'])
 
-        st.success("Document processed successfully!")
-
-        # Display structured output
-        st.subheader("Extracted Job Offer Information")
-        st.write("**Base Salary:**", data.get("base_salary", "N/A"))
-        st.write("**Signing Bonus:**", data.get("signing_bonus", "N/A"))
-        st.write("**Equity / Stock Options:**", data.get("equity", "N/A"))
-        st.write("**PTO:**", data.get("pto", "N/A"))
-        st.write("**Healthcare Plan:**", data.get("healthcare_plan", "N/A"))
-        st.write("**Start Date:**", data.get("start_date", "N/A"))
-        st.write("**NDA / Legal Clauses:**", data.get("nda_terms", "N/A"))
-
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error processing document: {e}")
+st.info("Use these questions to practice your interview skills. Click on each question to see a suggested response!")
