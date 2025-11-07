@@ -1,64 +1,75 @@
 # main.py
 import streamlit as st
 
-st.set_page_config(page_title="Interview Prep AI", layout="wide")
-st.title("Interview Prep Help")
+st.set_page_config(page_title="OfferSense", layout="wide")
+st.title("OfferSense")
+
 st.markdown("""
-Upload your resume and job description, and the AI will generate tailored interview questions with example answers.  
-This demo shows a **ready-to-use example** for practice.
+### Problem  
+Many people walk into job interviews without considering **negotiation** — unsure what’s fair, what’s flexible, or what they should advocate for.  
+
+### Solution  
+**OfferSense** helps users walk into HR or recruiter interviews with confidence.  
+By analyzing your **resume** and a **job description**, it provides AI-based recommendations on what to negotiate, grounded in **industry standards** and **role expectations**.
 """)
 
-# Dummy uploaded files
-st.subheader("Uploaded Files")
+st.divider()
+st.subheader("Upload Your Documents")
+
+st.write("Upload your **resume** and the **job description** for the role you’re applying to. OfferSense will analyze both to give you tailored negotiation insights.")
+
+# Dummy file display (pretend files were uploaded)
 st.write("**Resume:** Jane_Doe_Resume.pdf")
 st.write("**Job Description:** Software_Engineer_JD.pdf")
 
-st.info("Generating interview questions...")
-st.success("Interview questions generated!")
+st.info("Analyzing role and compensation data...")
+st.success("Recommendations generated successfully!")
 
-# Organize dummy questions by category
-questions = {
-    "Technical": [
-        {
-            "question": "Explain the difference between a REST API and GraphQL.",
-            "example_answer": "REST APIs use fixed endpoints and standard HTTP methods, while GraphQL allows clients to request exactly the data they need in a single query. GraphQL can reduce over-fetching and under-fetching of data."
-        },
-        {
-            "question": "How would you optimize a slow SQL query?",
-            "example_answer": "I would start by analyzing the query execution plan, adding appropriate indexes, rewriting joins if needed, and considering caching frequent queries."
-        }
-    ],
-    "Behavioral": [
-        {
-            "question": "Tell me about a time you handled a difficult project.",
-            "example_answer": "In my last role, I led a project with a tight deadline and unclear requirements. I broke down tasks, held daily syncs with the team, and delivered the project on time while maintaining quality."
-        },
-        {
-            "question": "How do you handle tight deadlines?",
-            "example_answer": "I prioritize tasks, communicate early if I need help, and break large tasks into smaller milestones to track progress effectively."
-        }
-    ],
-    "Salary Negotiation": [
-        {
-            "question": "How would you negotiate salary if offered?",
-            "example_answer": "I would express my excitement about the role and then reference industry standards and my experience: 'I'm thrilled about this opportunity. Based on my experience and market research, I was expecting a range closer to $95k-$105k. Is there flexibility in the offer?'"
-        },
-        {
-            "question": "What factors do you consider when evaluating a compensation package?",
-            "example_answer": "I look at base salary, bonus potential, equity, benefits, PTO, and opportunities for growth. I also consider alignment with my career goals."
-        }
-    ]
-}
+st.divider()
+st.header("OfferSense Insights")
 
-# Display questions in tabs
-tabs = st.tabs(list(questions.keys()))
+# Dummy analysis output (pretend it came from Bedrock or another AI model)
+col1, col2 = st.columns(2)
+with col1:
+    st.metric("Estimated Market Range", "$92,000 – $108,000")
+    st.metric("Industry Benchmark Level", "Mid-Level Engineer")
+with col2:
+    st.metric("Negotiation Flexibility", "High")
+    st.metric("Equity Offering Typical Range", "0.03% – 0.10%")
 
-for tab, category in zip(tabs, questions.keys()):
-    with tab:
-        st.subheader(f"{category} Questions")
-        for i, q in enumerate(questions[category], 1):
-            with st.expander(f"Q{i}: {q['question']}"):
-                st.write("**Example Answer:**")
-                st.write(q['example_answer'])
+st.markdown("""
+#### Suggested Negotiation Topics
+Based on the job description and your background, these areas are likely negotiable:
+- **Base Salary:** The offer may be 5–10% below market median for your experience level. Consider referencing benchmark data.
+- **Signing Bonus:** Many similar roles include $5k–$10k signing bonuses — worth asking about if not included.
+- **Equity:** If the company is early-stage or growth-phase, equity value may be negotiable.
+- **Remote Flexibility / Hybrid Schedule:** Increasingly common in tech firms — ask about 2–3 remote days per week.
+- **Professional Development Budget:** Often $1k–$3k per year for courses, certifications, or conferences.
+""")
 
-st.info("Use these questions to practice your interview skills. Click on each question to see a suggested response!")
+st.divider()
+st.header("Sample Interview Dialogue")
+
+st.markdown("""
+**HR:** “Our offer is for $95,000 with standard benefits.”  
+
+**You:** “Thank you — I’m really excited about this role. Based on my research and experience, I was expecting a range closer to $100k–$105k.  
+Is there flexibility there?”  
+
+**HR:** “Let me check with the hiring manager.”  
+
+**You:** “Great — I appreciate that. Also, could we discuss professional development resources or signing bonuses?”
+""")
+
+
+st.divider()
+st.header("Summary Recommendations")
+
+st.markdown("""
+✅ **Negotiate:** Base salary, signing bonus, equity  
+⚖️ **Review:** PTO and relocation terms  
+🟢 **Strong Fit:** Technical skills align closely with job description  
+🔵 **Overall Readiness Score:** 9.1 / 10
+""")
+
+st.info("OfferSense helps you enter interviews with clarity, data, and confidence.")
